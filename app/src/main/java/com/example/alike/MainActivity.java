@@ -176,21 +176,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alertDialog.setSingleChoiceItems(items, checkedItem, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                File file = new File(Objects.requireNonNull(FileUtil.getPath(filePath, getBaseContext())));
                 switch (which) {
                     case 0:
                         NetworkClient.BASE_URL = "https://alikefaceapp.herokuapp.com/uploading/";
+                        uploadToServer(file.getPath());
 
 
                         //Toast.makeText(getApplicationContext(), "Clicked on ADMIN", Toast.LENGTH_LONG).show();
                     case 1:
                         NetworkClient.BASE_URL = "https://alikefaceapp.herokuapp.com/addpic/";
+                        uploadToServer(file.getPath());
                         //File file = new File(Objects.requireNonNull(FileUtil.getPath(filePath, getBaseContext())));
                         //uploadToServer(file.getPath());
                         //Toast.makeText(getApplicationContext(), "Clicked on STUDENT", Toast.LENGTH_LONG).show();
                         break;
                     case 2:
                         NetworkClient.BASE_URL = "https://alikefaceapp.herokuapp.com/insertembeds/";
+                        uploadToServer(file.getPath());
                         //File file = new File(Objects.requireNonNull(FileUtil.getPath(filePath, getBaseContext())));
                         //uploadToServer(file.getPath());
                         //Toast.makeText(getApplicationContext(), "Clicked on ADVISER", Toast.LENGTH_LONG).show();
@@ -200,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         final AlertDialog alert = alertDialog.create();
-        alert.setCanceledOnTouchOutside(false);
+        alert.setCanceledOnTouchOutside(true);
         alert.show();
 
 
@@ -211,9 +214,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             showFileChooser();
         }
         if (v == buttonUpload) {
-            //showAlertDialog();
-            File file = new File(Objects.requireNonNull(FileUtil.getPath(filePath, getBaseContext())));
-            uploadToServer(file.getPath());
+            showAlertDialog();
+            //File file = new File(Objects.requireNonNull(FileUtil.getPath(filePath, getBaseContext())));
+            //uploadToServer(file.getPath());
         }
     }
 

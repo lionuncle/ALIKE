@@ -50,7 +50,7 @@ public class StarterActivity extends AppCompatActivity {
         sliderView.setSliderAdapter(new SliderAdapter(getApplicationContext()));
         sliderView.startAutoCycle();
         sliderView.setIndicatorAnimation(IndicatorAnimations.WORM);
-        sliderView.setSliderTransformAnimation(SliderAnimations.HORIZONTALFLIPTRANSFORMATION);
+        sliderView.setSliderTransformAnimation(SliderAnimations.DEPTHTRANSFORMATION);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
