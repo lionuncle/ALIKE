@@ -16,6 +16,8 @@
             android:id="@+id/buttonChoose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:background="@color/BASIC"
             android:text="Select" />
 
         <EditText
@@ -28,6 +30,8 @@
         <Button
             android:id="@+id/buttonUpload"
             android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:background="@color/BASIC"
             android:layout_height="wrap_content"
             android:text="Upload" />
 

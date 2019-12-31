@@ -1,7 +1,9 @@
 package com.example.alike;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -164,14 +166,53 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void showAlertDialog() {
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+        alertDialog.setTitle("WHICH API YOU WANT TO USE?");
+        alertDialog.setCancelable(false);
+        String[] items = {"Uploading","AddPic","InsertEmbedings"};
+        int checkedItem = 1;
 
+        alertDialog.setSingleChoiceItems(items, checkedItem, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                switch (which) {
+                    case 0:
+                        NetworkClient.BASE_URL = "https://alikefaceapp.herokuapp.com/uploading/";
+
+
+                        //Toast.makeText(getApplicationContext(), "Clicked on ADMIN", Toast.LENGTH_LONG).show();
+                    case 1:
+                        NetworkClient.BASE_URL = "https://alikefaceapp.herokuapp.com/addpic/";
+                        //File file = new File(Objects.requireNonNull(FileUtil.getPath(filePath, getBaseContext())));
+                        //uploadToServer(file.getPath());
+                        //Toast.makeText(getApplicationContext(), "Clicked on STUDENT", Toast.LENGTH_LONG).show();
+                        break;
+                    case 2:
+                        NetworkClient.BASE_URL = "https://alikefaceapp.herokuapp.com/insertembeds/";
+                        //File file = new File(Objects.requireNonNull(FileUtil.getPath(filePath, getBaseContext())));
+                        //uploadToServer(file.getPath());
+                        //Toast.makeText(getApplicationContext(), "Clicked on ADVISER", Toast.LENGTH_LONG).show();
+                        break;
+
+                }
+            }
+        });
+        final AlertDialog alert = alertDialog.create();
+        alert.setCanceledOnTouchOutside(false);
+        alert.show();
+
+
+    }
     @Override
     public void onClick(View v) {
         if (v == buttonChoose) {
             showFileChooser();
         }
         if (v == buttonUpload) {
-            File file = new File(Objects.requireNonNull(FileUtil.getPath(filePath, this)));
+            //showAlertDialog();
+            File file = new File(Objects.requireNonNull(FileUtil.getPath(filePath, getBaseContext())));
             uploadToServer(file.getPath());
         }
     }
