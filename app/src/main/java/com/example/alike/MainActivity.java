@@ -31,6 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.http.GET;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -74,24 +75,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //******************************** UPLOAD TO SERVER*************************************************************************************************
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @GET("addpic")
     private void uploadToServer(String filePath) {
         final ProgressDialog dialog =
                 ProgressDialog.show(MainActivity.this, "UPLOADING IMAGE", "Please Wait...");
         Retrofit retrofit = NetworkClient.getRetrofitClient(this);
         UploadAPIs uploadAPIs = retrofit.create(UploadAPIs.class);
-        //Create a file object using file path
         File file = new File(filePath);
-        // Create a request body with file and image media type
         RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), file);
-        // Create MultipartBody.Part using file request-body,file name and part name
         MultipartBody.Part part = MultipartBody.Part.createFormData("upload", file.getName(), fileReqBody);
-        //Create request body with text description and text media type
         RequestBody description = RequestBody.create(MediaType.parse("text/plain"), "image-type");
         //
-        Call call = uploadAPIs.uploadImage(part, description);
+        /*Call call = uploadAPIs.uploadImage(part, description);
         call.enqueue(new Callback() {
 
             @Override
+            @GET("addpic")
             public void onResponse(@NonNull Call call,@NonNull Response response) {
                 dialog.cancel();
                 Toast.makeText(MainActivity.this, "Upload Successful, Response: "+response.message(), Toast.LENGTH_SHORT).show();
@@ -100,6 +99,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onFailure(@NonNull Call call,@NonNull Throwable t) {
                 dialog.cancel();
                 Toast.makeText(MainActivity.this, "error: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });*/
+        uploadAPIs.getFile().enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                dialog.dismiss();
+                Toast.makeText(MainActivity.this, "RES "+response.body().toString(), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
             }
         });
     }
@@ -179,20 +190,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 File file = new File(Objects.requireNonNull(FileUtil.getPath(filePath, getBaseContext())));
                 switch (which) {
                     case 0:
-                        NetworkClient.BASE_URL = "https://alikefaceapp.herokuapp.com/uploading/";
+                        NetworkClient.BASE_URL = "https://alikefaceapp.herokuapp.com/";
                         uploadToServer(file.getPath());
 
 
                         //Toast.makeText(getApplicationContext(), "Clicked on ADMIN", Toast.LENGTH_LONG).show();
                     case 1:
-                        NetworkClient.BASE_URL = "https://alikefaceapp.herokuapp.com/addpic/";
+                        NetworkClient.BASE_URL = "https://alikefaceapp.herokuapp.com/";
                         uploadToServer(file.getPath());
                         //File file = new File(Objects.requireNonNull(FileUtil.getPath(filePath, getBaseContext())));
                         //uploadToServer(file.getPath());
                         //Toast.makeText(getApplicationContext(), "Clicked on STUDENT", Toast.LENGTH_LONG).show();
                         break;
                     case 2:
-                        NetworkClient.BASE_URL = "https://alikefaceapp.herokuapp.com/insertembeds/";
+                        NetworkClient.BASE_URL = "https://alikefaceapp.herokuapp.com/";
                         uploadToServer(file.getPath());
                         //File file = new File(Objects.requireNonNull(FileUtil.getPath(filePath, getBaseContext())));
                         //uploadToServer(file.getPath());

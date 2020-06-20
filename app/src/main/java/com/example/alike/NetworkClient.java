@@ -5,9 +5,10 @@ import android.content.Context;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
 
 public class NetworkClient {
-    public static String BASE_URL = "https://alikefaceapp.herokuapp.com/insertembeds/";
+    public static String BASE_URL = "https://alikefaceapp.herokuapp.com/";
     private static Retrofit retrofit;
 
     public static Retrofit getRetrofitClient(Context context) {
@@ -21,6 +22,7 @@ public class NetworkClient {
                     .build();
         }
         return retrofit;
+
     }
 
 
